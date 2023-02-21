@@ -11,7 +11,8 @@
 
 int _islower(int c)
 {
+	/*return: return 1 if true*/
 	if (c >= 97 && c <= 122)
-		return (1); /* return 1 if 'c' is lowercase*/
+		return (1);
 	return (0);
 }
