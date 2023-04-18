@@ -1,3 +1,5 @@
+#include "main.h"
+
 /*
  * e_ident[] - IDENTIFICATION INDEXES
  *
