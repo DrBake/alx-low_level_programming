@@ -1,3 +1,5 @@
+#include "main.h"
+
 #define MAXSIZE 1024 /* maximum buffer size for copying contents */
 
 
