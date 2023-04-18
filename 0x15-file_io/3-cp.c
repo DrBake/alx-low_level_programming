@@ -1,66 +1,85 @@
-#include <unistd.h>
-#include <fcntl.h>
-#include <stdlib.h>
-#include <stdio.h>
+#define MAXSIZE 1024 /* maximum buffer size for copying contents */
 
-#define BUFSIZE 1024
 
 /**
- * error_exit - function that prints an error message and exits
+ * __exit - prints error messages and exits with exit number
  *
- * @error_code: the exit status
- * @message: the error message to print
- */
-void error_exit(int error_code, char *message)
+ * @error: either the exit number or file descriptor
+ * @str: name of either file_in or file_out
+ * @fd: file descriptor
+ *
+ * Return: 0 on success
+*/
+int __exit(int error, char *str, int fd)
 {
-        dprintf(STDERR_FILENO, "%s\n", message);
-        exit(error_code);
+	switch (error)
+	{
+		case 97:
+			dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
+			exit(error);
+		case 98:
+			dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", str);
+			exit(error);
+		case 99:
+			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", str);
+			exit(error);
+		case 100:
+			dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
+			exit(error);
+		default:
+			return (0);
+	}
 }
 
 /**
- * main - function that copies the content of a file to another file
+ * main - create a copy of file
  *
- * @argc: the number of arguments
- * @argv: the array of arguments
+ * @argc: argument counter
+ * @argv: argument vector
  *
- * Return: 0 on success, or the appropriate error code on failure
- */
-int main(int argc, char **argv)
+ * Return: 0 for success.
+*/
+int main(int argc, char *argv[])
 {
-        int fd_from, fd_to, bytes_read, bytes_written;
-        char buf[BUFSIZE];
+	int file_in, file_out;
+	int read_stat, write_stat;
+	int close_in, close_out;
+	char buffer[MAXSIZE];
 
-        /* Check the number of arguments */
-        if (argc != 3)
-                error_exit(97, "Usage: cp file_from file_to");
+	/* if the number of arguments is not 3 */
+	if (argc != 3)
+		__exit(97, NULL, 0);
 
-        /* Open the source file */
-        fd_from = open(argv[1], O_RDONLY);
-        if (fd_from == -1)
-                error_exit(98, "Error: Can't read from file %s", argv[1]);
+	/* open the file from which contents will be copied */
+	file_in = open(argv[1], O_RDONLY);
+	if (file_in == -1)
+		__exit(98, argv[1], 0);
 
-        /* Create or truncate the destination file */
-        fd_to = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 0664);
-        if (fd_to == -1)
-                error_exit(99, "Error: Can't write to %s", argv[2]);
+	/* open/create the file to which contents will be copied */
+	file_out = open(argv[2], O_CREAT | O_TRUNC | O_WRONLY, 0664);
+	if (file_out == -1)
+		__exit(99, argv[2], 0);
 
-        /* Copy the content of the source file to the destination file */
-        while ((bytes_read = read(fd_from, buf, BUFSIZE)) > 0)
-        {
-                bytes_written = write(fd_to, buf, bytes_read);
-                if (bytes_written != bytes_read)
-                        error_exit(99, "Error: Can't write to %s", argv[2]);
-        }
+	/* read contents from file_in and write to file_out */
+	while ((read_stat = read(file_in, buffer, MAXSIZE)) != 0)
+	{
+		if (read_stat == -1) /* if reading from file_in fails */
+			__exit(98, argv[1], 0);
 
-        /* Check if there was an error reading the source file */
-        if (bytes_read == -1)
-                error_exit(98, "Error: Can't read from file %s", argv[1]);
+		/* copy and write contents to file_out */
+		write_stat = write(file_out, buffer, read_stat);
+		if (write_stat == -1) /* if writing to file_out fails */
+			__exit(99, argv[2], 0);
+	}
 
-        /* Close the files */
-        if (close(fd_from) == -1)
-                error_exit(100, "Error: Can't close fd %d", fd_from);
-        if (close(fd_to) == -1)
-                error_exit(100, "Error: Can't close fd %d", fd_to);
+	/* close file_in and file_out */
+	close_in = close(file_in);
+	if (close_in == -1)
+		__exit(100, NULL, file_in);
 
-        return (0);
+	close_out = close(file_out);
+	if (close_out == -1)
+		__exit(100, NULL, file_out);
+
+	return (0);
 }
