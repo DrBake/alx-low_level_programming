@@ -9,19 +9,19 @@
  */
 unsigned int binary_to_uint(const char *b)
 {
-	unsigned int num = 0; /* initialize the unsigned int to be returned */
-	int i; /* initialize the index variable */
+	unsigned int num = 0;
+	int i;
 
 	/* check if the input string is NULL */
 	if (b == NULL)
-		return 0; /* return 0 if the string is NULL */
+		return 0;
 
     /* iterate through the input string */
 	for (i = 0; b[i] != '\0'; i++)
 	{
 		/* check if the current character is either '0' or '1' */
 		if (b[i] != '0' && b[i] != '1')
-			return 0; /* return 0 if the current character is not '0' or '1' */
+			return 0;
 
 		/* shift the unsigned int left by one bit (i.e., multiply by 2) */
 		num = num << 1;
