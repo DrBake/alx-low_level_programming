@@ -1,4 +1,4 @@
-/*
+/**
  * flip_bits - returns the number of bits flipped in the pattern of the code
  * @n: num one.
  * @m: num two.
