@@ -1,7 +1,9 @@
 #include <stdlib.h>
 
 /*
- * Convert a binary string to an unsigned int
+ * main - Entry point
+ *
+ * Description:  Convert a binary string to an unsigned int
  *
  * @param b: pointer to a binary string
  *
