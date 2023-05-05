@@ -26,7 +26,7 @@ void print_binary(unsigned long int n)
 	/* Print each bit from the most significant to least significant */
 	for (; i >= 0; i--)
 	{
-		_putchar((n >> i) & 1 ? '1' : '0'); /* Print '1' if the bit is set, '0' otherwise */
+		_putchar((n >> i) & 1 ? '1' : '0');
 	}
 }
 

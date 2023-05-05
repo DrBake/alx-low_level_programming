@@ -7,16 +7,16 @@
  */
 unsigned int flip_bits(unsigned long int n, unsigned long int m)
 {
-    unsigned int nbits = 0;
+	unsigned int nbits = 0;
 
-    /* Iterate through each bit in n and m */
-    for (; n || m; n >>= 1, m >>= 1)
-    {
-        /* Check if the least significant bits are different */
-        if ((n & 1) != (m & 1))
-            nbits++;
-    }
+	/* Iterate through each bit in n and m */
+	for (; n || m; n >>= 1, m >>= 1)
+	{
+		/* Check if the least significant bits are different */
+		if ((n & 1) != (m & 1))
+			nbits++;
+	}
 
-    return nbits;
+	return (nbits);
 }
 

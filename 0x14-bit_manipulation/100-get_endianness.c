@@ -7,10 +7,10 @@
  */
 int get_endianness(void)
 {
-    unsigned int num = 1;
-    char *c = (char *)&num;
+	unsigned int num = 1;
+	char *c = (char *)&num;
 
-    /* Check the value of the least significant byte */
-    return (int)c[0];
+	/* Check the value of the least significant byte */
+	return ((int)c[0]);
 }
 
