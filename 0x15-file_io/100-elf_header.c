@@ -9,7 +9,6 @@
  *  correspond to the e_ident member.
 */
 
-
 /**
  * check_if_elf - checks if file is an ELF file by checking if it
  *                contains the magic numbers/file signature of an ELF file
@@ -18,8 +17,7 @@
  *           how to interpret the file
  *
  * Return: nothing
- */
-
+*/
 void check_if_elf(unsigned char *e_ident)
 {
 	int index = 0;
@@ -46,8 +44,7 @@ void check_if_elf(unsigned char *e_ident)
  *           how to interpret the file
  *
  * Return: nothing
- */
-
+*/
 void print_magic(unsigned char *e_ident)
 {
 	int index = 0;
@@ -74,8 +71,7 @@ void print_magic(unsigned char *e_ident)
  *           how to interpret the file
  *
  * Return: nothing
- */
-
+*/
 void print_class(unsigned char *e_ident)
 {
 	printf("  Class:                             ");
@@ -103,8 +99,7 @@ void print_class(unsigned char *e_ident)
  *           how to interpret the file
  *
  * Return: nothing
- */
-
+*/
 void print_data(unsigned char *e_ident)
 {
 	printf("  Data:                              ");
@@ -132,8 +127,7 @@ void print_data(unsigned char *e_ident)
  *           how to interpret the file
  *
  * Return: nothing
- */
-
+*/
 void print_version(unsigned char *e_ident)
 {
 	printf("  Version:                           ");/*EI_VERSION - File version*/
@@ -151,8 +145,7 @@ void print_version(unsigned char *e_ident)
  *           how to interpret the file
  *
  * Return: nothing
- */
-
+*/
 void print_osabi(unsigned char *e_ident)
 {
 	printf("  OS/ABI:                            ");
@@ -204,8 +197,7 @@ void print_osabi(unsigned char *e_ident)
  *           how to interpret the file
  *
  * Return: nothing
- */
-
+*/
 void print_abi(unsigned char *e_ident)
 {
 	printf("  ABI Version:                       %d\n",
@@ -220,8 +212,7 @@ void print_abi(unsigned char *e_ident)
  *           how to interpret the file
  *
  * Return: nothing
- */
-
+*/
 void print_type(unsigned int e_type, unsigned char *e_ident)
 {
 	if (e_ident[EI_DATA] == ELFDATA2MSB)
@@ -261,8 +252,7 @@ void print_type(unsigned int e_type, unsigned char *e_ident)
  *           how to interpret the file
  *
  * Return: nothing
- */
-
+*/
 void print_entry(unsigned long int e_entry, unsigned char *e_ident)
 {
 	printf("  Entry point address:               ");
@@ -286,8 +276,7 @@ void print_entry(unsigned long int e_entry, unsigned char *e_ident)
  * @elf_file: the file descriptor for the ELF file
  *
  * Return: nothing
- */
-
+*/
 void close_file(int elf_file)
 {
 	if (close(elf_file) == -1)
@@ -307,8 +296,7 @@ void close_file(int elf_file)
  * @argv: argument vector
  *
  * Return: Always 0 (success)
- */
-
+*/
 int main(int __attribute__((__unused__)) argc, char *argv[])
 {
 	Elf64_Ehdr *elf;
@@ -351,4 +339,4 @@ int main(int __attribute__((__unused__)) argc, char *argv[])
 	free(elf);
 	close_file(elf_file);
 	return (0);
-}
+}	
