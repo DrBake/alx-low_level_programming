@@ -339,4 +339,4 @@ int main(int __attribute__((__unused__)) argc, char *argv[])
 	free(elf);
 	close_file(elf_file);
 	return (0);
-}	
+}
